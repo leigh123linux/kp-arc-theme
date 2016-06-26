@@ -1,11 +1,12 @@
-%global git 5ec25f42e639
+%global git 3095952c1eb6
 
 Name:		arc-theme
 # Version from $(date +%s)
-Version:	1463048461
+Version:	20160605
 Release:	1.git%{git}%{?dist}
 Summary:	Arc is a theme for GTK 3, GTK 2 and GNOMEShell
 Group:		User Interface/Desktops
+Epoch:		1
 
 License:	GPLv3
 URL:		https://github.com/horst3180/Arc-theme
@@ -44,6 +45,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/themes/Arc-Dark
 
 %changelog
+* Sun Jun 26 2016 Chris Smart <csmart@kororaproject.org> 20160605-1.git3095952c1eb6
+- Build latest version from tag.
+
 * Thu May 12 2016 Chris Smart <csmart@kororaproject.org> 1463048461-1.git5ec25f42e639
 - Convert upstream spec file for use with kp build system
 - Build package for Korora 24
