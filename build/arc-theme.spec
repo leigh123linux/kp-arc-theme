@@ -1,9 +1,9 @@
-%global git 3095952c1eb6
+#global git 3095952c1eb6
 
 Name:		arc-theme
 # Version from $(date +%s)
 Version:	20160605
-Release:	1.git%{git}%{?dist}
+Release:	2%{?dist}
 Summary:	Arc is a theme for GTK 3, GTK 2 and GNOMEShell
 Group:		User Interface/Desktops
 Epoch:		1
@@ -11,17 +11,12 @@ Epoch:		1
 License:	GPLv3
 URL:		https://github.com/horst3180/Arc-theme
 
-Source0:	%{name}-%{version}.tar.gz
+Source0:	https://github.com/horst3180/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-BuildRequires: autoconf automake gtk3-devel
+BuildRequires:	autoconf automake gtk3-devel
 
-%if 0%{?suse_version}
-Requires:	gtk2-engine-murrine
-Requires:	gtk2-theming-engine-adwaita
-%else
 Requires:	gtk-murrine-engine
 Requires:	gnome-themes-standard
-%endif
 
 BuildArch:	noarch
 
@@ -32,19 +27,27 @@ Arc is a flat theme with transparent elements for GTK 3, GTK 2 and Gnome-Shell. 
 %setup -q
 
 %build
-./autogen.sh --with-gnome=3.20 --disable-unity --prefix=/usr
+autoreconf -vfi
+%configure
+%{make_build}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%{make_install}
 
 %files
-%defattr(-,root,root)
-%doc
-%{_datadir}/themes/Arc
-%{_datadir}/themes/Arc-Darker
-%{_datadir}/themes/Arc-Dark
+%doc AUTHORS README.md
+%license COPYING
+%{_datadir}/themes/Arc/
+%{_datadir}/themes/Arc-Darker/
+%{_datadir}/themes/Arc-Dark/
 
 %changelog
+* Mon Jul 04 2016 Leigh Scott <leigh123linux@googlemail.com> 20160605-2
+- spec file clean up
+- fix release tag, 20160605 is a release (not git)
+- fix source tag
+- don't use autogen as it misses the configure flags
+
 * Sun Jun 26 2016 Chris Smart <csmart@kororaproject.org> 20160605-1.git3095952c1eb6
 - Build latest version from tag.
 
