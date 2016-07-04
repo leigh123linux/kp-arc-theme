@@ -1,22 +1,25 @@
 #global git 3095952c1eb6
+%global gtk3_version 3.20
+%global real_version 20160605
 
 Name:		arc-theme
 # Version from $(date +%s)
-Version:	20160605
+Version:	%{gtk3_version}.%{real_version}
 Release:	2%{?dist}
 Summary:	Arc is a theme for GTK 3, GTK 2 and GNOMEShell
 Group:		User Interface/Desktops
-Epoch:		1
+Epoch:		2
 
 License:	GPLv3
 URL:		https://github.com/horst3180/Arc-theme
 
-Source0:	https://github.com/horst3180/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:	https://github.com/horst3180/%{name}/archive/%{real_version}.tar.gz#/%{name}-%{real_version}.tar.gz
 
 BuildRequires:	autoconf automake gtk3-devel
 
 Requires:	gtk-murrine-engine
 Requires:	gnome-themes-standard
+Requires:	gtk3 >= %{gtk3_version}
 
 BuildArch:	noarch
 
@@ -24,11 +27,11 @@ BuildArch:	noarch
 Arc is a flat theme with transparent elements for GTK 3, GTK 2 and Gnome-Shell. It supports GTK 3 and GTK 2 based desktop environments like Gnome, Unity, Budgie, Pantheon, etc.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{real_version}
 
 %build
 autoreconf -vfi
-%configure
+%configure --with-gnome=%{gtk3_version}
 %{make_build}
 
 %install
